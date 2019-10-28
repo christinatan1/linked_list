@@ -47,17 +47,19 @@ struct node *free_list(struct node *front){
 struct node *remove_node(struct node *front, int data){
   struct node *temp = front;
   if(front->i == data){
-    temp->next = NULL;
     free(temp);
-    temp->i = 0;
+    temp = NULL;
+    front = front->next;
     return front;
   }
 
   while (temp->next != NULL){
     if ((temp->next)->i == data && (temp->next)->next != NULL){
+      struct node *x; //temp value that holds the pointer to the next node after temp->next
+      x = (temp->next)->next;
       free(temp->next);
       temp->next = NULL;
-      temp->next = (temp->next)->next;
+      temp->next = x;
       return front;
     }
     if ((temp->next)->i == data && (temp->next)->next == NULL){
